@@ -1,5 +1,8 @@
 package kg.attractor.java.homework;
 
+import java.util.*;
+import java.util.stream.Collectors;
+
 import com.google.gson.Gson;
 
 import kg.attractor.java.homework.domain.Order;
@@ -34,6 +37,17 @@ public class RestaurantOrders {
     }
     // Этот блок кода менять нельзя! КОНЕЦ!
 
+
+    public void printOrders() {
+        orders.forEach(o ->
+                System.out.printf(
+                        "%s | total: %.2f | home: %s%n",
+                        o.getCustomer().getEmail(),
+                        o.getTotal(),
+                        o.isHomeDelivery()
+                )
+        );
+    }
     //----------------------------------------------------------------------
     //------   Реализация ваших методов должна быть ниже этой линии   ------
     //----------------------------------------------------------------------

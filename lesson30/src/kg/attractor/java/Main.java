@@ -1,18 +1,28 @@
 package kg.attractor.java;
 
+import kg.attractor.java.homework.RestaurantOrders;
+import kg.attractor.java.homework.domain.Order;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 public class Main {
 
     public static void main(String[] args) {
 
-        // это для занятия
 
-        // это для домашки
-        // выберите любое количество заказов, какое вам нравится.
+        //ЧТЕНИЕ ЗАКАЗОВ
+        var restaurantOrders = RestaurantOrders.read("orders_100.json");
+        List<Order> orders = restaurantOrders.getOrders();
 
-        //var orders = RestaurantOrders.read("orders_100.json").getOrders();
-        //var orders = RestaurantOrders.read("orders_1000.json").getOrders();
-        //var orders = RestaurantOrders.read("orders_10_000.json").getOrders();
+        System.out.println("Всего заказов: " + orders.size());
+        System.out.println("====================================");
 
-        // протестировать ваши методы вы можете как раз в этом файле (или в любом другом, в котором вам будет удобно)
+
+        //ПЕЧАТЬ ВСЕХ ЗАКАЗОВ
+            System.out.println("Все заказы:");
+        restaurantOrders.printOrders();
+        System.out.println("====================================");
+
     }
 }

@@ -6,7 +6,7 @@ import java.util.Objects;
 import kg.attractor.java.homework.util.NotImplementedException;
 
 public class Order {
-    // Этот блок кода менять нельзя! НАЧАЛО!
+
     private final Customer customer;
     private final List<Item> items;
     private final boolean homeDelivery;
@@ -47,13 +47,15 @@ public class Order {
     public double getTotal() {
         return total;
     }
-    // Этот блок кода менять нельзя! КОНЕЦ!
 
-    //----------------------------------------------------------------------
-    //------   Реализация ваших методов должна быть ниже этой линии   ------
-    //----------------------------------------------------------------------
 
     public void calculateTotal() {
-        throw new NotImplementedException("Вам надо реализовать этот метод!");
+        total = items.stream()
+                .mapToDouble(i -> i.getPrice() * i.getAmount())
+                .sum();
+
+        if (homeDelivery) {
+            total *= 1.1;
+        }
     }
 }
