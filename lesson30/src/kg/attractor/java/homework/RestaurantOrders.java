@@ -37,6 +37,25 @@ public class RestaurantOrders {
     }
     // Этот блок кода менять нельзя! КОНЕЦ!
 
+    public List<Order> ordersBetween(double min, double max) {
+        return orders.stream()
+                .filter(o -> o.getTotal() > min && o.getTotal() < max)
+                .collect(Collectors.toList());
+    }
+
+
+    public double totalIncome() {
+        return orders.stream()
+                .mapToDouble(Order::getTotal)
+                .sum();
+    }
+
+    public Set<String> uniqueSortedEmails() {
+        Set<String> emails = new TreeSet<>();
+        orders.forEach(o -> emails.add(o.getCustomer().getEmail()));
+        return emails;
+    }
+
 
     public Map<String, Order> bestAndWorstHomeDelivery() {
         Order max = null;

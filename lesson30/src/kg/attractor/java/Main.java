@@ -60,5 +60,22 @@ public class Main {
         System.out.println("MAX: " + homeStats.get("max").getTotal());
         System.out.println("MIN: " + homeStats.get("min").getTotal());
         System.out.println("====================================");
+        
+        //ЗАКАЗЫ В ДИАПАЗОНЕ
+        System.out.println("Заказы от 1000 до 3000:");
+        restaurantOrders.ordersBetween(1000, 3000)
+                .forEach(o -> System.out.println(o.getTotal()));
+        System.out.println("====================================");
+
+        //ОБЩАЯ СУММА
+        System.out.println("Общая сумма всех заказов:");
+        System.out.println(restaurantOrders.totalIncome());
+        System.out.println("====================================");
+
+        //УНИКАЛЬНЫЕ EMAIL
+        System.out.println("Уникальные email клиентов:");
+        Set<String> emails = restaurantOrders.uniqueSortedEmails();
+        emails.forEach(System.out::println);
+        System.out.println("====================================");
     }
 }
