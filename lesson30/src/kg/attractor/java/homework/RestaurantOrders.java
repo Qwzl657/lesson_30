@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 import com.google.gson.Gson;
 
 import kg.attractor.java.homework.domain.Order;
-
+import kg.attractor.java.homework.domain.Item;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -35,7 +35,62 @@ public class RestaurantOrders {
     public List<Order> getOrders() {
         return orders;
     }
+
     // Этот блок кода менять нельзя! КОНЕЦ!
+
+    //----------------------------------------------------------------------
+    //------Реализация ваших методов должна быть ниже этой линии   ------
+    //----------------------------------------------------------------------
+
+    // Наполните этот класс решением домашнего задания.
+    // Вам необходимо создать все необходимые методы
+    // для решения заданий из домашки :)
+    // вы можете добавлять все необходимые imports
+    //
+
+    public Map<String, Integer> soldItemsCount() {
+        Map<String, Integer> result = new HashMap<>();
+
+        for (Order o : orders) {
+            for (Item i : o.getItems()) {
+                result.merge(i.getName(), i.getAmount(), Integer::sum);
+            }
+        }
+        return result;
+    }
+
+
+    public String richestCustomer() {
+        return totalByCustomer().entrySet().stream()
+                .max(Map.Entry.comparingByValue())
+                .map(Map.Entry::getKey)
+                .orElse(null);
+    }
+
+    public String poorestCustomer() {
+        return totalByCustomer().entrySet().stream()
+                .min(Map.Entry.comparingByValue())
+                .map(Map.Entry::getKey)
+                .orElse(null);
+    }
+
+
+    public Map<String, Double> totalByCustomer() {
+        return orders.stream()
+                .collect(Collectors.groupingBy(
+                        o -> o.getCustomer().getFullName(),
+                        Collectors.summingDouble(Order::getTotal)
+                ));
+    }
+
+
+    public Map<String, List<Order>> ordersByCustomerName() {
+        return orders.stream()
+                .collect(Collectors.groupingBy(
+                        o -> o.getCustomer().getFullName()
+                ));
+    }
+
 
     public List<Order> ordersBetween(double min, double max) {
         return orders.stream()
@@ -111,13 +166,5 @@ public class RestaurantOrders {
                 )
         );
     }
-    //----------------------------------------------------------------------
-    //------   Реализация ваших методов должна быть ниже этой линии   ------
-    //----------------------------------------------------------------------
 
-    // Наполните этот класс решением домашнего задания.
-    // Вам необходимо создать все необходимые методы
-    // для решения заданий из домашки :)
-    // вы можете добавлять все необходимые imports
-    //
 }

@@ -60,7 +60,7 @@ public class Main {
         System.out.println("MAX: " + homeStats.get("max").getTotal());
         System.out.println("MIN: " + homeStats.get("min").getTotal());
         System.out.println("====================================");
-        
+
         //ЗАКАЗЫ В ДИАПАЗОНЕ
         System.out.println("Заказы от 1000 до 3000:");
         restaurantOrders.ordersBetween(1000, 3000)
@@ -76,6 +76,37 @@ public class Main {
         System.out.println("Уникальные email клиентов:");
         Set<String> emails = restaurantOrders.uniqueSortedEmails();
         emails.forEach(System.out::println);
+        System.out.println("====================================");
+        //ЗАКАЗЫ ПО КЛИЕНТАМ
+        System.out.println("Заказы по имени клиента:");
+        restaurantOrders.ordersByCustomerName()
+                .forEach((name, list) ->
+                        System.out.println(name + " -> " + list.size())
+                );
+        System.out.println("====================================");
+
+        //СУММА ПО КЛИЕНТАМ
+        System.out.println("Общая сумма заказов по клиентам:");
+        restaurantOrders.totalByCustomer()
+                .forEach((name, sum) ->
+                        System.out.printf("%s : %.2f%n", name, sum)
+                );
+        System.out.println("====================================");
+
+        //САМЫЙ БОГАТЫЙ / БЕДНЫЙ
+        System.out.println("Самый богатый клиент:");
+        System.out.println(restaurantOrders.richestCustomer());
+
+        System.out.println("Самый бедный клиент:");
+        System.out.println(restaurantOrders.poorestCustomer());
+        System.out.println("====================================");
+
+        //СКОЛЬКО ПРОДАНО ТОВАРОВ
+        System.out.println("Продано товаров:");
+        restaurantOrders.soldItemsCount()
+                .forEach((item, count) ->
+                        System.out.println(item + " -> " + count)
+                );
         System.out.println("====================================");
     }
 }
