@@ -38,6 +38,50 @@ public class RestaurantOrders {
     // Этот блок кода менять нельзя! КОНЕЦ!
 
 
+    public Map<String, Order> bestAndWorstHomeDelivery() {
+        Order max = null;
+        Order min = null;
+
+        for (Order o : orders) {
+            if (!o.isHomeDelivery()) continue;
+
+            if (max == null || o.getTotal() > max.getTotal()) {
+                max = o;
+            }
+            if (min == null || o.getTotal() < min.getTotal()) {
+                min = o;
+            }
+        }
+
+        Map<String, Order> result = new HashMap<>();
+        result.put("max", max);
+        result.put("min", min);
+        return result;
+    }
+
+
+    public List<Order> homeDeliveryOrders() {
+        return orders.stream()
+                .filter(Order::isHomeDelivery)
+                .collect(Collectors.toList());
+    }
+
+
+    public List<Order> topMostExpensive(int n) {
+        return orders.stream()
+                .sorted((a, b) -> Double.compare(b.getTotal(), a.getTotal()))
+                .limit(n)
+                .collect(Collectors.toList());
+    }
+
+    public List<Order> topCheapest(int n) {
+        return orders.stream()
+                .sorted(Comparator.comparingDouble(Order::getTotal))
+                .limit(n)
+                .collect(Collectors.toList());
+    }
+
+
     public void printOrders() {
         orders.forEach(o ->
                 System.out.printf(
